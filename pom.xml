@@ -40,10 +40,10 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
-                    <version>3.5.1</version>
+                    <version>3.0</version>
                     <configuration>
-                        <source>1.8</source>
-                        <target>1.8</target>
+                        <source>1.6</source>
+                        <target>1.6</target>
                     </configuration>
                 </plugin>
                 <plugin>
@@ -200,10 +200,9 @@
                     </configuration>
                     <dependencies>
                         <dependency>
-                            <groupId>org.hsqldb</groupId>
-                            <artifactId>hsqldb</artifactId>
-                            <version>${hsqldb.version}</version>
-                            <type>jar</type>
+                            <groupId>mysql</groupId>
+                            <artifactId>mysql-connector-java</artifactId>
+                            <version>5.1.26</version>
                         </dependency>
                         <dependency>
                             <groupId>org.apache.tomcat</groupId>
@@ -216,62 +215,6 @@
                             <artifactId>commons-dbcp</artifactId>
                             <version>1.4</version>
                             <type>jar</type>
-                        </dependency>
-                    </dependencies>
-                </plugin>
-                
-                <plugin>
-                    <artifactId>maven-antrun-plugin</artifactId>
-                    <version>1.8</version>
-                    <executions>
-                        <execution>
-                            <id>hsqldb-start</id>
-                            <configuration>
-                                <target>
-                                    <echo message="Starting HSQL Database..." />
-                                    <java fork="true" spawn="true" classname="org.hsqldb.Server" classpathref="maven.plugin.classpath">
-                                        <arg  line="-database.0 file:${basedir}/../data/broadleaf -dbname.0 broadleaf"/>
-                                    </java>
-                                    <echo message="Database started succcessfully" />
-                                </target>
-                            </configuration>
-                            <goals>
-                                <goal>run</goal>
-                            </goals>
-                        </execution>
-                        <execution>
-                            <id>hsqldb-stop</id>
-                            <configuration>
-                                <target>
-                                    <echo message="Stopping HSQL database..." />
-                                    <sql
-                                        autocommit="true"
-                                        print="true"
-                                        classpathref="maven.plugin.classpath"
-                                        driver="org.hsqldb.jdbcDriver"
-                                        url="jdbc:hsqldb:hsql://localhost/broadleaf;ifexists=true"
-                                        userid="sa"
-                                        password="">
-                                        <transaction>SHUTDOWN</transaction>
-                                    </sql>
-                                    <echo message="Database stopped successfully" />
-                                </target>
-                            </configuration>
-                        </execution>
-                        <execution>
-                            <id>change-identifier</id>
-                            <configuration>
-                                <target>
-                                    <ant antfile="build.xml" />
-                                </target>
-                            </configuration>
-                        </execution>
-                    </executions>
-                    <dependencies>
-                        <dependency>
-                            <groupId>org.hsqldb</groupId>
-                            <artifactId>hsqldb</artifactId>
-                            <version>${hsqldb.version}</version>
                         </dependency>
                     </dependencies>
                 </plugin>
@@ -407,6 +350,11 @@
                 <type>jar</type>
                 <scope>compile</scope>
             </dependency>
+            <dependency>
+                <groupId>com.mycompany-community</groupId>
+                <artifactId>core</artifactId>
+                <version>${project.version}</version>
+            </dependency>
 
             <!--Broadleaf libraries -->
             <dependency>
@@ -496,6 +444,18 @@
                 <version>3.0.1</version>
                 <type>jar</type>
                 <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.tomcat</groupId>
+                <artifactId>tomcat-jdbc</artifactId>
+                <version>7.0.30</version>
+                <type>jar</type>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>5.1.26</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

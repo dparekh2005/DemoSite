@@ -227,7 +227,13 @@
         <property name="characterEncoding" value="UTF-8" />
     </bean>
     -->
-    
+    <bean id="blMergedPersistenceXmlLocations" class="org.springframework.beans.factory.config.ListFactoryBean">
+        <property name="sourceList">
+            <list>
+                <value>classpath*:/META-INF/persistence.xml</value>
+            </list>
+        </property>
+    </bean>
     <bean id="jsLocations" class="org.springframework.beans.factory.config.ListFactoryBean">
         <property name="sourceList">
             <list>
